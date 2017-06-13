@@ -34,10 +34,8 @@ public static class SrDebugExtensions
     public static void DebugAllUnlocked(this PediaDirector self)
     {
         var unlock = typeof(PediaDirector).GetMethod("Unlock", BindingFlags.NonPublic | BindingFlags.Instance);
-        var enumerator = Enum.GetValues(typeof(PediaDirector.Id)).GetEnumerator();
-        while (enumerator.MoveNext())
-            if (enumerator.Current != null)
-                unlock.Invoke(self, new object[] {(PediaDirector.Id) ((int) enumerator.Current)});
+        foreach (PediaDirector.Id id in Enum.GetValues(typeof(PediaDirector.Id)))
+            unlock.Invoke(self, new object[] { id });
     }
 
     // TutorialDirector
@@ -55,10 +53,7 @@ public static class SrDebugExtensions
     public static void DebugAllCompleted(this TutorialDirector self)
     {
         var completed = GetPrivateField<TutorialDirector, HashSet<TutorialDirector.Id>>("completed", self);
-        var enumerator = Enum.GetValues(typeof(TutorialDirector.Id)).GetEnumerator();
-        while (enumerator.MoveNext())
-            if (enumerator.Current != null)
-                completed.Add((TutorialDirector.Id) ((int) enumerator.Current));
+        foreach (TutorialDirector.Id id in Enum.GetValues(typeof(TutorialDirector.Id))) completed.Add(id);
     }
 
     // AchievementsDirector
@@ -80,10 +75,7 @@ public static class SrDebugExtensions
     public static void DebugAllAwarded(this AchievementsDirector self)
     {
         var earnedAchievements = GetPrivateField<AchievementsDirector, HashSet<AchievementsDirector.Achievement>>("earnedAchievements", self);
-        var enumerator = Enum.GetValues(typeof(AchievementsDirector.Achievement)).GetEnumerator();
-        while (enumerator.MoveNext())
-            if (enumerator.Current != null)
-                earnedAchievements.Add((AchievementsDirector.Achievement) ((int) enumerator.Current));
+        foreach (AchievementsDirector.Achievement achievement in Enum.GetValues(typeof(AchievementsDirector.Achievement))) earnedAchievements.Add(achievement);
     }
 
     // ProgressDirector
@@ -100,20 +92,17 @@ public static class SrDebugExtensions
     /// <param name="self">The ProgressDirector instance</param>
     public static void DebugUnlockProgress(this ProgressDirector self)
     {
-        var enumerator = Enum.GetValues(typeof(ProgressDirector.ProgressType)).GetEnumerator();
-        while (enumerator.MoveNext())
+        foreach (ProgressDirector.ProgressType type in
+            Enum.GetValues(typeof(ProgressDirector.ProgressType)))
         {
-            if (enumerator.Current == null) continue;
-            var current = (ProgressDirector.ProgressType)((int)enumerator.Current);
-            
             // ReSharper disable once SwitchStatementMissingSomeCases
-            switch (current)
+            switch (type)
             {
                 case ProgressDirector.ProgressType.CORPORATE_PARTNER:
-                    self.SetProgress(current, 28);
+                    self.SetProgress(type, 28);
                     break;
                 default:
-                    self.SetProgress(current, 1);
+                    self.SetProgress(type, 1);
                     break;
             }
         }
@@ -126,10 +115,8 @@ public static class SrDebugExtensions
     /// <param name="self">The PlayerState instance</param>
     public static void DebugGiveAllUpgrades(this PlayerState self)
     {
-        var enumerator = Enum.GetValues(typeof(PlayerState.Upgrade)).GetEnumerator();
-        while (enumerator.MoveNext())
-            if (enumerator.Current != null)
-                self.AddUpgrade((PlayerState.Upgrade) ((int) enumerator.Current));
+        foreach (PlayerState.Upgrade upgrade in Enum.GetValues(typeof(PlayerState.Upgrade)))
+            self.AddUpgrade(upgrade);
     }
 
     // Ammo
@@ -149,15 +136,15 @@ public static class SrDebugExtensions
         var slots = GetPrivateField<Ammo, object[]>("slots", self);
         var emotions = ammoSlot.GetField("emotions", BindingFlags.Public | BindingFlags.Instance);
 
-        foreach (var gameObject in potentialAmmo)
+        foreach (var ammo in potentialAmmo)
         {
-            if (Identifiable.IsSlime(gameObject.GetComponent<Identifiable>().id) &&
-                gameObject.GetComponent<Identifiable>().id != Identifiable.Id.HUNTER_SLIME)
+            if (Identifiable.IsSlime(ammo.GetComponent<Identifiable>().id) &&
+                ammo.GetComponent<Identifiable>().id != Identifiable.Id.HUNTER_SLIME)
             {
-                slime.Add(gameObject);
+                slime.Add(ammo);
             }
-            else if (Identifiable.IsFood(gameObject.GetComponent<Identifiable>().id))
-                food.Add(gameObject);
+            else if (Identifiable.IsFood(ammo.GetComponent<Identifiable>().id))
+                food.Add(ammo);
         }
 
         for (var i = 0; i < numSlots; i++)
