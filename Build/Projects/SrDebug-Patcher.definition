@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Name="SrDebug-Patcher" Path="Source/SrDebug-Patcher" Type="Console">
+	<References>
+		<!-- GAC Assemblies -->
+		<Reference Include="System" />
+		<Reference Include="System.Core" />
+		
+		<!-- NuGet -->
+		<Reference Include="Mono.Cecil" />
+	</References>
+	
+	<Files>
+		<!-- C# Sources -->
+		<Compile Include="*.cs" />
+	</Files>
+</Project>

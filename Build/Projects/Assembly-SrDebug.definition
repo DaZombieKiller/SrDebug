@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Name="Assembly-SrDebug" Path="Source/Assembly-SrDebug" Type="Library">
+	<References>
+		<!-- GAC Assemblies -->
+		<Reference Include="System" />
+		<Reference Include="System.Core" />
+		
+		<!-- External Projects -->
+		<Reference Include="Assembly-CSharp" />
+		<Reference Include="UnityEngine" />
+	</References>
+	
+	<!-- The framework version must be v3.5 or lower, because that's all Unity supports  -->
+	<!-- Yes, it's shitty, but there's nothing I can do because Unity's Mono is outdated -->
+	<Properties>
+		<FrameworkVersions>
+			<Platform Name="Windows"><Version>v3.5</Version></Platform>
+			<Platform Name="Linux"><Version>v3.5</Version></Platform>
+			<Platform Name="MacOS"><Version>v3.5</Version></Platform>
+		</FrameworkVersions>
+	</Properties>
+	
+	<Files>
+		<Compile Include="*.cs" />
+	</Files>
+</Project>
