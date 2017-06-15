@@ -12,5 +12,8 @@
 	<Files>
 		<!-- C# Sources -->
 		<Compile Include="*.cs" />
+		<Content Include="*.exe.config">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</Files>
 </Project>
