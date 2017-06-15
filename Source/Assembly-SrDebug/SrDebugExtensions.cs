@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Collections.Generic;
-
+using System.Linq;
 using UnityEngine;
 
 /// <summary>Debug functions that were removed from the game</summary>
@@ -127,8 +127,6 @@ public static class SrDebugExtensions
     /// <param name="fillTo"></param>
     public static void DebugFillRandomAmmo(this Ammo self, int fillTo)
     {
-        var slime = new List<GameObject>();
-        var food = new List<GameObject>();
         var potentialAmmo = GetPrivateField<Ammo, GameObject[]>("potentialAmmo", self);
         var numSlots = GetPrivateField<Ammo, int>("numSlots", self);
 
@@ -136,22 +134,10 @@ public static class SrDebugExtensions
         var slots = GetPrivateField<Ammo, object[]>("slots", self);
         var emotions = ammoSlot.GetField("emotions", BindingFlags.Public | BindingFlags.Instance);
 
-        foreach (var ammo in potentialAmmo)
-        {
-            if (Identifiable.IsSlime(ammo.GetComponent<Identifiable>().id) &&
-                ammo.GetComponent<Identifiable>().id != Identifiable.Id.HUNTER_SLIME)
-            {
-                slime.Add(ammo);
-            }
-            else if (Identifiable.IsFood(ammo.GetComponent<Identifiable>().id))
-                food.Add(ammo);
-        }
-
         for (var i = 0; i < numSlots; i++)
         {
             // pick a random item to insert into the slot
-            // the last slot will always be food
-            var plucked = Randoms.SHARED.Pluck((i != numSlots - 1) ? slime : food, null);
+            var plucked = Randoms.SHARED.Pluck(new List<GameObject>(potentialAmmo), null);
             
             // instantiate ammo slot
             var constructor = ammoSlot.GetConstructors()[0];
