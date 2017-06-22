@@ -1,4 +1,6 @@
 using System;
+using System.Reflection;
+using System.Security.Cryptography;
 using UnityEngine;
 
 /// <summary>The restored Debug Director</summary>
@@ -191,8 +193,15 @@ public class SrDebugDirector : MonoBehaviour
         // handle noclip, if it's enabled
         if (_noclip && _camera && _fpController)
         {
-            _noclipPos += _camera.transform.forward * SRInput.Actions.vertical.RawValue * 20 * Time.deltaTime;
-            _noclipPos += _camera.transform.right * SRInput.Actions.horizontal.RawValue * 20 * Time.deltaTime;
+            // calculate speed, will be multiplied by two if run is held
+            var speed = 20f * (SRInput.Actions.run.State ? 2f : 1f);
+            
+            // add movement
+            _noclipPos += _camera.transform.forward * SRInput.Actions.vertical.RawValue * speed * Time.deltaTime;
+            _noclipPos += _camera.transform.right * SRInput.Actions.horizontal.RawValue * speed * Time.deltaTime;
+
+            // stop all movement on the controller and reposition it
+            _fpController.Stop();
             _fpController.SetPosition(_noclipPos);
         }
 
