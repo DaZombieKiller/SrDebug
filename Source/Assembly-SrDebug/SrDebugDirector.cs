@@ -101,8 +101,14 @@ public class SrDebugDirector : MonoBehaviour
 
         // decrement time of day
         if (Input.GetKeyDown(KeyCode.LeftBracket))
+        {
             _timeDir.AdjustTimeOfDay(-0.0416666679f);
-        
+            
+            // check for negative time
+            if (_timeDir.WorldTime() <= 0f)
+                _timeDir.SetWorldTime(0f);
+        }
+
         // increment time of day
         else if (Input.GetKeyDown(KeyCode.RightBracket))
             _timeDir.AdjustTimeOfDay(0.0416666679f);
