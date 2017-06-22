@@ -150,11 +150,10 @@ public class SrDebugDirector : MonoBehaviour
             _playerState.DebugGiveAllUpgrades();
             _playerState.SetHealth(_playerState.GetMaxHealth());
             _playerState.SetEnergy(_playerState.GetMaxEnergy());
-            _playerState.AddKey();
-            _playerState.AddKey();
-            _playerState.AddKey();
-            _playerState.AddKey();
-            _playerState.AddKey();
+            
+            // add 5 keys
+            for (var i = 0; i < 5; i++)
+                _playerState.AddKey();
         }
 
         // fill inventory with random items and ammo
