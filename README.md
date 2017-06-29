@@ -5,7 +5,9 @@ A debug menu for Slime Rancher
 
 # Usage
 ### Official release
-1. Extract the zip to your _Slime Rancher_ game directory (usually **SteamApps/common/Slime Rancher/**)
+1. Extract the zip to your _Slime Rancher_ game directory
+  * usually **SteamApps/common/Slime Rancher/** on Windows
+  * usually **Application Support/Steam/steamapps/common/Slime Rancher/Resources** on macOS
 2. Run `SrDebug-Patcher.exe`, or `mono SrDebug-Patcher.exe` for non-Windows
 3. Wait for the patch tool to complete, then run _Slime Rancher_
 
@@ -20,7 +22,9 @@ A debug menu for Slime Rancher
 7. Wait for the patch tool to complete, then run _Slime Rancher_
 
 # Building
-1. Browse to your _Slime Rancher_ game directory (usually **SteamApps/common/Slime Rancher/**)
+1. Browse to your _Slime Rancher_ game directory
+  * usually **SteamApps/common/Slime Rancher/** on Windows
+  * usually **Application Support/Steam/steamapps/common/Slime Rancher/Resources** on macOS
 2. Locate the game's _Managed_ folder (SlimeRancher_Data/Managed on Windows & Linux, Content/Resources/Data/Managed on Mac)
 3. Copy _UnityEngine.dll_ and _Assembly-CSharp.dll_ into the _Managed_ folder in the _SrDebug_ repository root
 4. Run `generate.bat` or `Protobuild --generate` for non-Windows
