@@ -1,3 +1,4 @@
+# Notice: This repository is no longer active. SrDebug is now a [UPM](https://github.com/UnityPluginManager) plugin.
 # SrDebug
 A debug menu for Slime Rancher
 
